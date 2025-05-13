@@ -205,7 +205,7 @@ function App() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    fetch('/api/questions')
+    fetch('https://driving-theory-backend.onrender.com/api/questions')
       .then(res => res.json())
       .then(data => setQuestions(data));
   }, []);
