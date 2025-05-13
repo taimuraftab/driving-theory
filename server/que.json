@@ -1,0 +1,55 @@
+[
+    {
+      "id": 1,
+      "category": "Accident & Emergencies",
+      "question": "What should you do if your car catches fire in a tunnel?",
+      "options": [
+        { "label": "Drive it out of the tunnel" },
+        { "label": "Leave the engine running" },
+        { "label": "Wait inside the car" },
+        { "label": "Open all windows" }
+      ],
+      "correct_answer": "Drive it out of the tunnel",
+      "explanation": "If it's safe to do so, driving out of the tunnel reduces the risk of smoke inhalation."
+    },
+    {
+      "id": 2,
+      "category": "Accident & Emergencies",
+      "question": "What should you do if your car catches fire in a tunnel?",
+      "options": [
+        { "label": "Drive it out of the tunnel" },
+        { "label": "Leave the engine running" },
+        { "label": "Wait inside the car" },
+        { "label": "Open all windows" }
+      ],
+      "correct_answer": "Drive it out of the tunnel",
+      "explanation": "If it's safe to do so, driving out of the tunnel reduces the risk of smoke inhalation."
+    },
+    {
+      "id": 3,
+      "category": "Accident & Emergencies",
+      "question": "What should you do if your car catches fire in a tunnel?",
+      "options": [
+        { "label": "Drive it out of the tunnel" },
+        { "label": "Leave the engine running" },
+        { "label": "Wait inside the car" },
+        { "label": "Open all windows" }
+      ],
+      "correct_answer": "Drive it out of the tunnel",
+      "explanation": "If it's safe to do so, driving out of the tunnel reduces the risk of smoke inhalation."
+    },
+    {
+      "id": 4,
+      "category": "Accident & Emergencies",
+      "question": "What should you do if your car catches fire in a tunnel?",
+      "options": [
+        { "label": "Drive it out of the tunnel" },
+        { "label": "Leave the engine running" },
+        { "label": "Wait inside the car" },
+        { "label": "Open all windows" }
+      ],
+      "correct_answer": "Drive it out of the tunnel",
+      "explanation": "If it's safe to do so, driving out of the tunnel reduces the risk of smoke inhalation."
+    }
+  ]
+  
