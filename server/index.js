@@ -31,10 +31,21 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = ["https://drivingtheory.onrender.com"]; 
 
 app.use(cors({
-  origin: allowedOrigins,  // Allow only your frontend domain
+  origin: function (origin, callback) {
+    // allow requests with no origin like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `CORS policy does not allow access from origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ["GET", "POST"],
-  credentials: true,  // Allow cookies if needed
+  credentials: true
 }));
+
+// ======== Middleware =========
+app.use(express.json()); // Parses incoming JSON requests
 
 
 // MongoDB connection
