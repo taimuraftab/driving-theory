@@ -56,14 +56,59 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.error('MongoDB error:', err));
 
 // API endpoint that was previously using questions.json
-app.get('/api/questions', async (req, res) => {
+// app.get('/api/questions', async (req, res) => {
+//   try {
+//     const questions = await Question.find();
+//     res.json(questions);
+//   } catch (err) {
+//     res.status(500).json({ error: 'Failed to fetch questions' });
+//   }
+// });
+
+// Get all unique categories with their question count
+app.get('/api/categories', async (req, res) => {
   try {
-    const questions = await Question.find();
-    res.json(questions);
+    const all = await Question.find();
+    const categoryMap = {};
+
+    all.forEach(q => {
+      const category = q.category.trim();
+      categoryMap[category] = (categoryMap[category] || 0) + 1;
+    });
+
+    const categories = Object.entries(categoryMap).map(([category, count]) => ({
+      category,
+      count
+    }));
+
+    res.json(categories);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch questions' });
+    res.status(500).json({ error: 'Failed to load categories' });
   }
 });
+
+// Get questions by category or random
+app.get('/api/questions/:category', async (req, res) => {
+  try {
+    const categoryParam = decodeURIComponent(req.params.category).toLowerCase();
+    const all = await Question.find();
+
+    let filtered;
+
+    if (categoryParam === 'random') {
+      filtered = all.sort(() => Math.random() - 0.5).slice(0, 50);
+    } else {
+      filtered = all
+        .filter(q => q.category.trim().toLowerCase() === categoryParam)
+        .sort(() => Math.random() - 0.5);
+    }
+
+    res.json(filtered);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load questions for category' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
