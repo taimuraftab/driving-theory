@@ -11,16 +11,15 @@ const Header = () => (
   </header>
 );
 
-function Home({ questions }) {
+function Home() {
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
-  const categoryMap = questions.reduce((acc, q) => {
-    const key = q.category.trim();
-    acc[key] = (acc[key] || 0) + 1;
-    return acc;
-  }, {});
-
-  const categories = Object.entries(categoryMap);
+  useEffect(() => {
+    fetch('https://driving-theory-backend.onrender.com/api/categories')
+      .then(res => res.json())
+      .then(setCategories);
+  }, []);
 
   const startQuiz = (category) => {
     navigate(`/quiz/${encodeURIComponent(category)}`);
@@ -37,12 +36,12 @@ function Home({ questions }) {
         Take 50 Random Questions
       </div>
 
-      <CategorySelector categories={categories} onSelect={startQuiz} />
+      <CategorySelector categories={categories.map(c => [c.category, c.count])} onSelect={startQuiz} />
     </div>
   );
 }
 
-function QuizPage({ questions }) {
+function QuizPage() {
   const { category } = useParams();
   const decodedCategory = decodeURIComponent(category);
 
@@ -54,19 +53,19 @@ function QuizPage({ questions }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (questions.length === 0) return;
-
-    let filtered;
-    if (decodedCategory.toLowerCase() === 'random') {
-      filtered = [...questions].sort(() => Math.random() - 0.5).slice(0, 50);
-    } else {
-      filtered = questions
-        .filter(q => q.category.trim().toLowerCase() === decodedCategory.trim().toLowerCase())
-        .sort(() => Math.random() - 0.5);
-    }
-
-    setQuizQuestions(filtered);
-  }, [questions, category]);
+    const url = `https://driving-theory-backend.onrender.com/api/questions/${category}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const shuffled = [...data].sort(() => Math.random() - 0.5);
+        const selected = decodedCategory.toLowerCase() === 'random' ? shuffled.slice(0, 50) : shuffled;
+        setQuizQuestions(selected);
+        setCurrent(0);
+        setSelected(null);
+        setShowExplanation(false);
+        setResults([]);
+      });
+  }, [category]);
 
   const score = results.filter(r => r === 'correct').length;
   const isLast = current === quizQuestions.length - 1;
@@ -87,20 +86,8 @@ function QuizPage({ questions }) {
   };
 
   const handleRetake = () => {
-    let reshuffled;
-    if (decodedCategory.toLowerCase() === 'random') {
-      reshuffled = [...questions].sort(() => Math.random() - 0.5).slice(0, 50);
-    } else {
-      reshuffled = questions
-        .filter(q => q.category.trim().toLowerCase() === decodedCategory.trim().toLowerCase())
-        .sort(() => Math.random() - 0.5);
-    }
-
-    setQuizQuestions(reshuffled);
-    setCurrent(0);
-    setSelected(null);
-    setShowExplanation(false);
-    setResults([]);
+    // Force re-fetch by updating the category param
+    navigate(`/quiz/${category}`, { replace: true });
   };
 
   const handleBack = () => {
@@ -116,7 +103,7 @@ function QuizPage({ questions }) {
     }
   };
 
-  if (questions.length === 0) {
+  if (quizQuestions.length === 0) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
         <p>Loading quiz...</p>
@@ -124,7 +111,7 @@ function QuizPage({ questions }) {
     );
   }
 
-  if (quizQuestions.length && current >= quizQuestions.length) {
+  if (current >= quizQuestions.length) {
     return (
       <ResultPage
         results={results}
@@ -202,20 +189,12 @@ function QuizPage({ questions }) {
 }
 
 function App() {
-  const [questions, setQuestions] = useState([]);
-
-  useEffect(() => {
-    fetch('https://driving-theory-backend.onrender.com/api/questions')
-      .then(res => res.json())
-      .then(data => setQuestions(data));
-  }, []);
-
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home questions={questions} />} />
-        <Route path="/quiz/:category" element={<QuizPage questions={questions} />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/quiz/:category" element={<QuizPage />} />
       </Routes>
     </>
   );
