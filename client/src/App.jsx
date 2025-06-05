@@ -36,9 +36,7 @@ function Home() {
 
   if (loading) {
     return (
-      <div style={{ padding: '4rem', textAlign: 'center' }}>
-        <Spinner />
-      </div>
+      <Spinner />
     );
   }
 
@@ -135,11 +133,7 @@ function QuizPage() {
   };
 
   if (quizQuestions.length === 0) {
-    return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <p>Loading quiz...</p>
-      </div>
-    );
+     return <Spinner />;
   }
 
   if (current >= quizQuestions.length) {
