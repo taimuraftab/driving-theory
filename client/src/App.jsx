@@ -4,13 +4,8 @@ import CategorySelector from './components/CategorySelector';
 import QuestionCard from './components/QuestionCard';
 import ResultPage from './components/ResultPage';
 import Spinner from './components/Spinner';
+import Header from './components/Header'; 
 import './App.css';
-
-const Header = () => (
-  <header className="app-header">
-    <h2 style={{ margin: 0 }}>🚗 Driving Theory Prep</h2>
-  </header>
-);
 
 function Home() {
   const [categories, setCategories] = useState([]);
