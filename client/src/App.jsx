@@ -62,7 +62,9 @@ function Home() {
         <div className="random-card" onClick={() => navigate('/quiz/random')}>
           Take 50 Random Questions
         </div>
-        <CategorySelector categories={categories} onSelect={startQuiz} />
+        
+        <CategorySelector categories={categories.map(c => [c.category, c.count])} onSelect={startQuiz} />
+
       </section>
 
     </div>
