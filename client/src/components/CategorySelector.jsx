@@ -30,7 +30,7 @@ const CategorySelector = ({ categories, onSelect }) => {
             onClick={() => onSelect(cat)}
           >
             <span className="category-label">{emoji} {cat}</span>
-            <div className="category-footer">📚 {count} Questions</div>
+            <div className="category-footer">Take all {count} Questions</div>
           </div>
         );
       })}
