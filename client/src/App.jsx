@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import CategorySelector from './components/CategorySelector';
 import QuestionCard from './components/QuestionCard';
 import ResultPage from './components/ResultPage';
+import Spinner from './components/Spinner';
 import './App.css';
 
 const Header = () => (
@@ -13,17 +14,33 @@ const Header = () => (
 
 function Home() {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch('https://driving-theory-backend.onrender.com/api/categories')
       .then(res => res.json())
-      .then(setCategories);
+      .then(data => {
+        setCategories(data);
+        setLoading(false); 
+      })
+      .catch(error => {
+        console.error("Failed to fetch categories:", error);
+        setLoading(false);
+      });
   }, []);
 
   const startQuiz = (category) => {
     navigate(`/quiz/${encodeURIComponent(category)}`);
   };
+
+  if (loading) {
+    return (
+      <div style={{ padding: '4rem', textAlign: 'center' }}>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="quiz-container">
