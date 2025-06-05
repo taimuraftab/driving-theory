@@ -22,6 +22,7 @@ const CategorySelector = ({ categories, onSelect }) => {
     <div className="category-grid">
       {categories.map(([cat, count], index) => {
         const emoji = emojiMap[cat] || '📘';
+
         return (
           <div
             key={index}
@@ -29,7 +30,7 @@ const CategorySelector = ({ categories, onSelect }) => {
             onClick={() => onSelect(cat)}
           >
             <span className="category-label">{emoji} {cat}</span>
-            <div className="category-footer">Take all {count}</div>
+            <div className="category-footer">📚 {count} Questions</div>
           </div>
         );
       })}
