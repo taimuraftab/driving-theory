@@ -40,34 +40,44 @@ function Home() {
     );
   }
 
-  return (
-    <div className="quiz-container">
+   return (
+    <div className="home-container">
+      
       <section className="hero-section">
-        <h1 className="hero-title">🚗 Master the UK Driving Theory Test</h1>
-        <p className="hero-subtitle">Practice with real exam questions. Learn fast. Pass confidently.</p>
-        <button className="start-button" onClick={() => window.scrollTo({ top: 600, behavior: 'smooth' })}>
-          Start Now
-        </button>
-      </section>
-
-      <section className="features-section">
-        <div className="feature">✅ 700+ Practice Questions</div>
-        <div className="feature">📈 Track Your Progress</div>
-      </section>
-
-      <section className="categories-wrapper">
-        <h2 className="section-title">Choose a Category</h2>
-        <div className="random-card" onClick={() => navigate('/quiz/random')}>
-          Take 50 Random Questions
+        <div className="hero-content">
+          <h1 className="hero-title">🚗 Ace Your UK Driving Theory Test</h1>
+          <p className="hero-subtitle">Practice with real exam questions. Study smart. Pass confidently.</p>
+          <button className="start-button" onClick={() => window.scrollTo({ top: 700, behavior: 'smooth' })}>
+            🚀 Start Practicing
+          </button>
         </div>
-        
-        <CategorySelector categories={categories.map(c => [c.category, c.count])} onSelect={startQuiz} />
-
       </section>
 
-    </div>
+      
+      <section className="features-section">
+        <div className="feature-card">
+          <h3>700+ Questions</h3>
+          <p>Extensive question bank across all topics</p>
+        </div>
+        <div className="feature-card">
+          <h3>Real Test Format</h3>
+          <p>Practice with questions styled like the official test</p>
+        </div>
+        <div className="feature-card">
+          <h3>Track Progress</h3>
+          <p>Measure your improvement and be test-ready</p>
+        </div>
+      </section>
 
-    
+      
+      <section className="categories-section">
+        <h2 className="section-title">📝 Choose Your Practice</h2>
+        <div className="random-quiz-card" onClick={() => navigate('/quiz/random')}>
+          🎯 Take 50 Random Questions
+        </div>
+        <CategorySelector categories={categories.map(c => [c.category, c.count])} onSelect={startQuiz} />
+      </section>
+    </div>
   );
 }
 

@@ -91,7 +91,7 @@
   background-color: #ffe5e5;
 }
 
-.random-card {
+/* .random-card {
   width: 100%;
   max-width: 400px;
   height: 120px;
@@ -178,4 +178,115 @@
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: #333;
+} */
+
+/* --- Home Page Redesign --- */
+.home-container {
+  font-family: 'Poppins', sans-serif;
+  background: #f9fafb;
+}
+
+/* Hero */
+.hero-section {
+  background: linear-gradient(135deg, #3a8fd9 0%, #0056b3 100%);
+  color: #fff;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.start-button {
+  background-color: #ffc107;
+  color: #1c1c1c;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+  background-color: #e0a800;
+}
+
+/* Features */
+.features-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  background: #ffffff;
+  padding: 3rem 2rem;
+}
+
+.feature-card {
+  background: #f1f5f9;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  flex: 1 1 250px;
+  max-width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card h3 {
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+}
+
+/* Categories */
+.categories-section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.random-quiz-card {
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  background: #d1e7ff;
+  border: 2px dashed #007bff;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.random-quiz-card:hover {
+  background-color: #b6d4fe;
+  transform: scale(1.05);
 }

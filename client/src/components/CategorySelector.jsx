@@ -19,21 +19,18 @@ const emojiMap = {
 
 const CategorySelector = ({ categories, onSelect }) => {
   return (
-     <div className="category-grid">
+    <div className="category-grid">
       {categories.map(([cat, count], index) => {
         const emoji = emojiMap[cat] || '📘';
-
         return (
           <div
-  key={index}
-  className="category-card"
-  onClick={() => onSelect(cat)}
->
-  <span className="category-label">{emoji} {cat}</span>
-
-  {/* Bottom footer strip */}
-  <div className="category-footer">Take all {count}</div>
-    </div>
+            key={index}
+            className="category-card"
+            onClick={() => onSelect(cat)}
+          >
+            <span className="category-label">{emoji} {cat}</span>
+            <div className="category-footer">Take all {count}</div>
+          </div>
         );
       })}
     </div>
