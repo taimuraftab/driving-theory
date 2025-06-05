@@ -5,7 +5,6 @@ import QuestionCard from './components/QuestionCard';
 import ResultPage from './components/ResultPage';
 import './App.css';
 
-
 const Header = () => (
   <header className="app-header">
     <h2 style={{ margin: 0 }}>🚗 Driving Theory Prep</h2>
@@ -17,7 +16,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/categories')
+    fetch('https://driving-theory-backend.onrender.com/api/categories')
       .then(res => res.json())
       .then(setCategories);
   }, []);
@@ -54,7 +53,7 @@ function QuizPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `api/questions/${category}`;
+    const url = `https://driving-theory-backend.onrender.com/api/questions/${category}`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -87,7 +86,6 @@ function QuizPage() {
   };
 
   const handleRetake = () => {
-    // Force re-fetch by updating the category param
     navigate(`/quiz/${category}`, { replace: true });
   };
 
