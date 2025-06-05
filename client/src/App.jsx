@@ -44,17 +44,30 @@ function Home() {
 
   return (
     <div className="quiz-container">
-      <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Choose a Category</h1>
+      <section className="hero-section">
+        <h1 className="hero-title">🚗 Master the UK Driving Theory Test</h1>
+        <p className="hero-subtitle">Practice with real exam questions. Learn fast. Pass confidently.</p>
+        <button className="start-button" onClick={() => window.scrollTo({ top: 600, behavior: 'smooth' })}>
+          Start Now
+        </button>
+      </section>
 
-      <div
-        className="random-card"
-        onClick={() => navigate('/quiz/random')}
-      >
-        Take 50 Random Questions
-      </div>
+      <section className="features-section">
+        <div className="feature">✅ 700+ Practice Questions</div>
+        <div className="feature">📈 Track Your Progress</div>
+      </section>
 
-      <CategorySelector categories={categories.map(c => [c.category, c.count])} onSelect={startQuiz} />
+      <section className="categories-wrapper">
+        <h2 className="section-title">Choose a Category</h2>
+        <div className="random-card" onClick={() => navigate('/quiz/random')}>
+          Take 50 Random Questions
+        </div>
+        <CategorySelector categories={categories} onSelect={startQuiz} />
+      </section>
+
     </div>
+
+    
   );
 }
 
