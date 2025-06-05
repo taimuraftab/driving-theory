@@ -23,7 +23,8 @@
 }
 
 .category-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px) scale(1.02);
 }
 
 .category-label {
@@ -49,5 +50,6 @@
   font-size: 1.1rem;
   padding: 0.4rem;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }

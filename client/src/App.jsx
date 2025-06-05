@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import CategorySelector from './components/CategorySelector';
 import QuestionCard from './components/QuestionCard';
 import ResultPage from './components/ResultPage';
+import Spinner from './components/Spinner'; // ✅ Import Spinner
 import './App.css';
 
 const Header = () => (
@@ -13,17 +14,29 @@ const Header = () => (
 
 function Home() {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ Loading State
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://driving-theory-backend.onrender.com/api/categories')
+    fetch('/api/categories')
       .then(res => res.json())
-      .then(setCategories);
+      .then(data => {
+        setCategories(data);
+        setLoading(false); // ✅ End loading
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
   const startQuiz = (category) => {
     navigate(`/quiz/${encodeURIComponent(category)}`);
   };
+
+  if (loading) {
+    return <Spinner />; // ✅ Show spinner while loading
+  }
 
   return (
     <div className="quiz-container">
@@ -46,6 +59,7 @@ function QuizPage() {
   const decodedCategory = decodeURIComponent(category);
 
   const [quizQuestions, setQuizQuestions] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ Loading State
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -53,19 +67,24 @@ function QuizPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `https://driving-theory-backend.onrender.com/api/questions/${category}`;
+    const url = `api/questions/${category}`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
         const shuffled = [...data].sort(() => Math.random() - 0.5);
-        const selected = decodedCategory.toLowerCase() === 'random' ? shuffled.slice(0, 50) : shuffled;
-        setQuizQuestions(selected);
+        const selectedQuestions = decodedCategory.toLowerCase() === 'random' ? shuffled.slice(0, 50) : shuffled;
+        setQuizQuestions(selectedQuestions);
         setCurrent(0);
         setSelected(null);
         setShowExplanation(false);
         setResults([]);
+        setLoading(false); // ✅ End loading
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
       });
-  }, [category]);
+  }, [category, decodedCategory]);
 
   const score = results.filter(r => r === 'correct').length;
   const isLast = current === quizQuestions.length - 1;
@@ -86,7 +105,6 @@ function QuizPage() {
   };
 
   const handleRetake = () => {
-    // Force re-fetch by updating the category param
     navigate(`/quiz/${category}`, { replace: true });
   };
 
@@ -103,15 +121,11 @@ function QuizPage() {
     }
   };
 
-  if (quizQuestions.length === 0) {
-    return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <p>Loading quiz...</p>
-      </div>
-    );
+  if (loading) {
+    return <Spinner />; // ✅ Show spinner while loading quiz
   }
 
-  if (current >= quizQuestions.length) {
+  if (quizQuestions.length && current >= quizQuestions.length) {
     return (
       <ResultPage
         results={results}
